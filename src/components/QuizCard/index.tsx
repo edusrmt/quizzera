@@ -1,10 +1,25 @@
 import React from 'react';
-import { Quiz } from '../../shared/quizzes';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+
+import { Quiz } from '../../shared/quizzes';
 
 const QuizCard: React.FC<Quiz> = (props) => {
+  const history = useHistory();
+
+  function handleClick() {
+    const triviaState = {
+      category: props.category.id,
+      difficulty: props.difficulty,
+      type: props.type
+    };
+
+    history.push('/quiz', triviaState);
+    return;
+  }
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <h3>{props.category.name}</h3>
       <span>{props.type === 'multiple' ? 'Multiple Choice' : 'True or False'}</span>
       <span className="capitalize">{props.difficulty}</span>
