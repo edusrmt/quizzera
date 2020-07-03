@@ -31,7 +31,7 @@ const MultipleQuestion:React.FC<QuestionParams> = ({ question, onAnswer }) => {
       </div>
       <div className="choices-container">
         {
-          choices.map(option => <button key={option} onClick={() => checkAnswer(option)}>{option}</button>)
+          choices.map(option => <button key={option} dangerouslySetInnerHTML={{ __html: option }} onClick={() => checkAnswer(option)} />)
         }
       </div>
     </Container>

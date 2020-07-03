@@ -62,7 +62,7 @@ const Quiz = () => {
     if (nextIndex === amount) {
       setQuizState(QuizState.Finish);
       setTimeout(() => {
-        history.push('/');
+        history.push('/quizzes');
       }, 2000);
       return;
     }
