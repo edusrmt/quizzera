@@ -2,10 +2,13 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const User = require('./models/User');
+const Score = require('./models/Score');
 const secret = require('./config/keys').TokenSecret;
 const authenticate = require('./config/auth');
 
 const routes = express.Router();
+
+// AUTHENTICATION ROUTES
 
 routes.get('/', (req, res) => {
   res.send('Quizzera');
@@ -42,11 +45,18 @@ routes.post('/register', (req, res) => {
         res.json({ errors });
       } else {
         const newUser = new User({ username, password });
-        const response = await newUser.save();
+        const user = await newUser.save();
 
-        if (response) {
-          console.log(response);
-          res.sendStatus(200);
+        if (user) {
+          console.log(user);
+
+          const newScore = new Score({ user: user.id });
+          const score = await newScore.save();
+
+          if (score) {
+            console.log(score);
+            res.sendStatus(200);
+          }
         }
       }
     });
@@ -71,6 +81,30 @@ routes.post('/login', async (req, res) => {
   });
 
   res.send({ token });
+});
+
+// SCORE ROUTES
+
+routes.post('/score', authenticate, async (req, res) => {
+  const score = await Score.findOne({ user: req.userId });
+
+  if (!score) {
+    return res.status(400).send({ error: 'Score not found!'});
+  }
+
+  
+  score.questionsAnswered += req.body.questionsAnswered;
+  score.correctAnswers += req.body.correctAnswers;
+  score.successTime += req.body.successTime;
+  
+  if (req.body.isHard) {
+    score.correctHardAnswers += req.body.correctAnswers;
+    score.hardSuccessTime += req.body.successTime;
+  }
+  
+  const newScore = await score.save();
+  
+  res.json(newScore);
 });
 
 module.exports = routes;

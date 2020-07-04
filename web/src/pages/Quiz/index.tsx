@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { trivia } from '../../services/trivia';
+import server from '../../services/server';
 
 import { Question } from '../../shared/types';
 import BooleanQuestion from '../../components/BooleanQuestion';
@@ -31,6 +32,8 @@ const Quiz = () => {
   const [amount, setAmount] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [successTime, setSuccessTime] = useState(0);
+  const [questionTime, setQuestionTime] = useState(Date.now());
   
   const QuestionComponent = triviaState.type === 'multiple' ? MultipleQuestion : BooleanQuestion;
 
@@ -46,24 +49,45 @@ const Quiz = () => {
     }).then(response => {
         setQuestions(response.data.results);
         setQuizState(QuizState.AnswerQuestions);
+        setQuestionTime(Date.now());
       });
   }
 
   function validateAnswer (isCorrect: boolean) {
-    if (isCorrect) setCorrectAnswers(correctAnswers + 1);
+    const elapsedTime = (Date.now() - questionTime) / 1000;
+
+    if (isCorrect) { 
+      setCorrectAnswers(correctAnswers + 1);
+      setSuccessTime(successTime + elapsedTime);
+    }
 
     nextQuestion();
   }
 
-  function nextQuestion () {
+  async function nextQuestion () {
     const nextIndex = currentQuestion + 1;
     setCurrentQuestion(nextIndex);
+    setQuestionTime(Date.now());
 
+    // When the quiz ends
     if (nextIndex === amount) {
       setQuizState(QuizState.Finish);
+
+      const quizScore = {
+        questionsAnswered: amount,
+        correctAnswers: correctAnswers,
+        successTime: successTime,
+        isHard: triviaState.difficulty === 'hard'
+      }
+
+      await server.post('/score', quizScore).then(res => {
+        console.log(res);
+      });
+
       setTimeout(() => {
         history.push('/quizzes');
       }, 2000);
+
       return;
     }
   }

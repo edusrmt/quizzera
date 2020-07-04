@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Quizzes from './pages/Quizzes';
 import Quiz from './pages/Quiz';
+import Rank from './pages/Rank';
 
 const PrivateRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
   const Page = component as ElementType;
@@ -25,7 +26,8 @@ const Routes = () => {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <PrivateRoute path="/quizzes" component={Quizzes} />
-        <Route path="/quiz" component={Quiz} />        
+        <PrivateRoute path="/quiz" component={Quiz} />
+        <PrivateRoute path="/rank" component={Rank} />
       </Switch>
     </BrowserRouter>
   );
