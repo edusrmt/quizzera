@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Crosshair, Clock, Award } from 'react-feather';
 import server from '../../services/server';
 
-import { Container } from '../../styles/global';
 import { Content, RankTable } from './styles';
 import Header from '../../components/Header';
 import Navigator from '../../components/Navigator';

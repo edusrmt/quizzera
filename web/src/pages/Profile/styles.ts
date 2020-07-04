@@ -28,6 +28,7 @@ export const Content = styled.div`
     svg {
       margin-right: .2rem;
       margin-left: 1rem;
+      color: #45a29e;
 
       &:first-child {
         margin-left: 0;

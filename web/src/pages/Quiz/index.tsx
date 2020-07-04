@@ -8,6 +8,7 @@ import BooleanQuestion from '../../components/BooleanQuestion';
 import MultipleQuestion from '../../components/MultipleQuestion';
 import Header from '../../components/Header';
 import QuestionDisplay from '../../components/QuestionDisplay';
+import QuizStatus from '../../components/QuizStatus';
 
 import { Container, Button } from '../../styles/global';
 import { Content } from './styles';
@@ -37,6 +38,8 @@ const Quiz = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [successTime, setSuccessTime] = useState(0);
   const [questionTime, setQuestionTime] = useState(Date.now());
+  const [totalTime, setTotalTime] = useState(0);
+  const [endMessage, setEndMessage] = useState('Time is out!');
   
   const QuestionComponent = triviaState.type === 'multiple' ? MultipleQuestion : BooleanQuestion;
 
@@ -53,6 +56,18 @@ const Quiz = () => {
         setQuestions(response.data.results);
         setQuizState(QuizState.AnswerQuestions);
         setQuestionTime(Date.now());
+
+        if (triviaState.type === 'multiple') {
+          if (triviaState.difficulty === 'easy') {
+            setTotalTime(chosenAmount * 5);
+          } else if (triviaState.difficulty === 'medium') {
+            setTotalTime(chosenAmount * 10);
+          } else {
+            setTotalTime(chosenAmount * 15);
+          }
+        } else {
+          setTotalTime(chosenAmount * 5);
+        }
       });
   }
 
@@ -74,7 +89,13 @@ const Quiz = () => {
 
     // When the quiz ends
     if (nextIndex === amount) {
-      setQuizState(QuizState.Finish);
+      setEndMessage('Congratulations!');
+      finishQuiz();
+    }
+  }
+
+  async function finishQuiz () {
+    setQuizState(QuizState.Finish);
 
       const quizScore = {
         questionsAnswered: amount,
@@ -90,7 +111,6 @@ const Quiz = () => {
       }, 2000);
 
       return;
-    }
   }
 
   return (
@@ -110,13 +130,25 @@ const Quiz = () => {
           }
           {
             (quizState === QuizState.AnswerQuestions && questions[currentQuestion]) && (
-              <QuestionComponent question={questions[currentQuestion]} onAnswer={validateAnswer} />
+              <>
+                <QuestionComponent question={questions[currentQuestion]} onAnswer={validateAnswer} />
+                {
+                  totalTime > 0 &&
+                  <QuizStatus
+                    totalTime={totalTime}
+                    totalQuestions={amount}
+                    answeredQuestions={currentQuestion}
+                    correctAnswers={correctAnswers}
+                    onTimeEnd={finishQuiz}
+                  />
+                }
+              </>
             )
           }
           {
             quizState === QuizState.Finish && (      
               <div className="message">        
-                <h2>Congratulations!</h2>
+                <h2>{endMessage}</h2>
                 <p>You got {correctAnswers} questions right!</p>              
               </div>
             )

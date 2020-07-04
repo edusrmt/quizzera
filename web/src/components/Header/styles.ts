@@ -14,6 +14,6 @@ export const Container = styled.div`
   box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
 
   img {
-    width: 25%
+    height: 30px;
   }
 `;
