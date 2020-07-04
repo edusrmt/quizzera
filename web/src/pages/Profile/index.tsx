@@ -33,9 +33,9 @@ const Profile = () => {
       <h1 style={{ margin: '1rem' }}>Profile</h1>
       <h3>{user?.username}</h3>      
       { picture && <img src={picture} alt="User avatar" /> }
-      <p>Accuracy: {user?.accuracy.toFixed(2)}</p>
-      <p>Speed: {user?.speed.toFixed(2)}</p>
-      <p>Wisdom: {user?.wisdom.toFixed(2)}</p>
+      <p>Accuracy: {user?.accuracy ? user.accuracy.toFixed(2) : 0}</p>
+      <p>Speed: {user?.speed ? user.speed.toFixed(2) : 0}</p>
+      <p>Wisdom: {user?.wisdom ? user.wisdom.toFixed(2) : 0}</p>
       <button style={{color: 'red'}} onClick={handleLogout}>Logout</button>
     </>
   );

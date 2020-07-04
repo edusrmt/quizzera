@@ -1,18 +1,21 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { Button } from '../../styles/global';
-import { Container } from './styles';
+import { Container, Button } from '../../styles/global';
+import { Content } from './styles';
 import logo from '../../assets/logo.png';
 
 const Home = () => {
+  const history = useHistory();
+
   return (
     <Container>
-      <div className="content">
+      <Content>
         <img src={logo} alt="Logotipo do Quizzera" />
         <p>Answer correctly to get to the top!</p>
-        <Button>Register</Button>
-        <Button>Login</Button>
-      </div>
+        <Button onClick={() => history.push('/register')}>Register</Button>
+        <Button onClick={() => history.push('/login')}>Login</Button>
+      </Content>
     </Container>
   );
 }

@@ -55,7 +55,8 @@ routes.post('/register', (req, res) => {
 
           if (score) {
             console.log(score);
-            res.sendStatus(200);
+            const token = jwt.sign({ id: user.id }, secret);
+            res.json({ token });
           }
         }
       }
@@ -76,9 +77,7 @@ routes.post('/login', async (req, res) => {
     return res.status(400).send({ error: 'Password do not match!'});
   }
 
-  const token = jwt.sign({ id: user.id }, secret, {
-    expiresIn: 86400
-  });
+  const token = jwt.sign({ id: user.id }, secret);
 
   res.send({ token });
 });
