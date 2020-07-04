@@ -130,4 +130,20 @@ routes.get('/rank', async (req, res) => {
   });
 });
 
+routes.get('/user', authenticate, async (req, res) => {
+  Score.findOne({ user: req.userId }).populate('user').exec((err, score) => {
+    if(err)
+      console.log(err);
+
+    if (score) {
+      res.json({
+        username: score.user.username,
+        accuracy: score.accuracy,
+        speed: score.speed,
+        wisdom: score.wisdom
+      });
+    }
+  });
+});
+
 module.exports = routes;
