@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const ScoreSchema = new mongoose.Schema({
   user: {
     type: mongoose.ObjectId,
-    required: true
+    required: true,
+    ref: 'User'
   },
   questionsAnswered: {
     type: Number,
@@ -38,5 +39,7 @@ ScoreSchema.virtual('speed').get(function () {
 ScoreSchema.virtual('wisdom').get(function () {
   return this.correctHardAnswers ** 2 / this.hardSuccessTime;
 });
+
+ScoreSchema.set('toObject', { getters: true });
 
 module.exports = mongoose.model('Score', ScoreSchema);

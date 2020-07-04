@@ -107,4 +107,27 @@ routes.post('/score', authenticate, async (req, res) => {
   res.json(newScore);
 });
 
+routes.get('/rank', async (req, res) => {
+  Score.find({}).populate('user').exec((err, scores) => {
+    if(err)
+      console.log(err);
+
+    if (scores) {
+      let accuracy = [], speed = [], wisdom = [];
+
+      scores.forEach(function (score) {
+        accuracy.push({ username: score.user.username, score: score.accuracy });
+        speed.push({ username: score.user.username, score: score.speed });
+        wisdom.push({ username: score.user.username, score: score.wisdom });
+      });
+
+      accuracy.sort((a, b) => b.score - a.score).splice(3);
+      speed.sort((a, b) => b.score - a.score).splice(3);
+      wisdom.sort((a, b) => b.score - a.score).splice(3);
+
+      res.json({ accuracy, speed, wisdom });
+    }
+  });
+});
+
 module.exports = routes;
