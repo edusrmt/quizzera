@@ -6,8 +6,11 @@ import server from '../../services/server';
 import { Question } from '../../shared/types';
 import BooleanQuestion from '../../components/BooleanQuestion';
 import MultipleQuestion from '../../components/MultipleQuestion';
+import Header from '../../components/Header';
+import QuestionDisplay from '../../components/QuestionDisplay';
 
-import { QuestionDisplay, AnswerButton } from './styles';
+import { Container, Button } from '../../styles/global';
+import { Content } from './styles';
 
 enum QuizState {
   SelectAmount,
@@ -80,9 +83,7 @@ const Quiz = () => {
         isHard: triviaState.difficulty === 'hard'
       }
 
-      await server.post('/score', quizScore).then(res => {
-        console.log(res);
-      });
+      await server.post('/score', quizScore);
 
       setTimeout(() => {
         history.push('/quizzes');
@@ -94,32 +95,34 @@ const Quiz = () => {
 
   return (
     <>
-      <h1 style={{ margin: '1rem' }}>Quiz</h1>
-      {
-        quizState === QuizState.SelectAmount && (
-          <>
-            <QuestionDisplay>
-              <p>How many questions do you want?</p>
-            </QuestionDisplay>
-            <AnswerButton onClick={() => startQuiz(5)}>5</AnswerButton>
-            <AnswerButton onClick={() => startQuiz(10)}>10</AnswerButton>
-            <AnswerButton onClick={() => startQuiz(20)}>20</AnswerButton>
-          </>
-        )
-      }
-      {
-        (quizState === QuizState.AnswerQuestions && questions[currentQuestion]) && (
-          <QuestionComponent question={questions[currentQuestion]} onAnswer={validateAnswer} />
-        )
-      }
-      {
-        quizState === QuizState.Finish && (
-          <div style={{marginLeft: '1rem'}}>
-            <h2>Congratulations!</h2>
-            <p>You got {correctAnswers} questions right!</p>
-          </div>
-        )
-      }
+      <Header />
+      <Container>
+        <Content>
+          {
+            quizState === QuizState.SelectAmount && (
+              <>
+                <QuestionDisplay text="How many questions do you want?" />
+                <Button onClick={() => startQuiz(5)}>5</Button>
+                <Button onClick={() => startQuiz(10)}>10</Button>
+                <Button onClick={() => startQuiz(20)}>20</Button>
+              </>
+            )
+          }
+          {
+            (quizState === QuizState.AnswerQuestions && questions[currentQuestion]) && (
+              <QuestionComponent question={questions[currentQuestion]} onAnswer={validateAnswer} />
+            )
+          }
+          {
+            quizState === QuizState.Finish && (      
+              <div className="message">        
+                <h2>Congratulations!</h2>
+                <p>You got {correctAnswers} questions right!</p>              
+              </div>
+            )
+          }
+        </Content>      
+      </Container>
     </>
   );
 }

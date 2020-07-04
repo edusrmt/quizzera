@@ -55,7 +55,7 @@ export default function Quizzes () {
   }
 
   return (
-    <div>
+    <>
       <Header />
       <Content>
         <div className="content-head">
@@ -104,6 +104,6 @@ export default function Quizzes () {
         </div>
       </Content>
       <Navigator active={0} />
-    </div>
+    </>
   );
 }

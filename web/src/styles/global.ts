@@ -10,11 +10,12 @@ export const Container = styled.div`
 
 interface ButtonProps {
   primary?: true;
+  keepCase?: true;
 }
 
 export const Button = styled.button<ButtonProps>`
   width: 100%;
-  text-transform: uppercase;
+  text-transform: ${props => props.keepCase ? 'none' : 'uppercase'};
   background: ${props => props.primary ? '#66fcf1' : 'none'};
   border: 2px solid #66fcf1;
   border-radius: 2px;

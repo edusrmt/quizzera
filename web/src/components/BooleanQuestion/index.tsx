@@ -1,7 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+
+import { Button } from '../../styles/global';
+import { Container } from './styles';
 
 import { QuestionParams } from '../../shared/types';
+import QuestionDisplay from '../QuestionDisplay';
 
 const BooleanQuestion:React.FC<QuestionParams> = ({ question, onAnswer }) => {
   
@@ -11,39 +14,15 @@ const BooleanQuestion:React.FC<QuestionParams> = ({ question, onAnswer }) => {
 
   return (
     <Container>
-      <div className="question-display">
-        <p dangerouslySetInnerHTML={{ __html: question.question }} />
-      </div>
+      <QuestionDisplay text={question.question} />
       <div className="choices-container">
-        <button onClick={() => checkAnswer('True')}>True</button>
-        <button onClick={() => checkAnswer('False')}>False</button>
+        <Button onClick={() => checkAnswer('True')} keepCase>True</Button>
+        <Button onClick={() => checkAnswer('False')} keepCase>False</Button>
       </div>
     </Container>
   );
 }
 
-const Container = styled.div`
-  .question-display {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
-    margin: 0 1rem;
-    padding: 1rem;
-    border: 1px solid black;
-    border-radius: 5px;
-    min-height: 25vh;
-    text-align: center;
-  }
-
-  .choices-container {
-    button {
-      width: calc(100% - 2rem);
-      margin: 1rem 1rem 0 1rem;
-      height: 10vh;
-    }
-  }
-`;
 
 export default BooleanQuestion;
