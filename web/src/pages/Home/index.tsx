@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <Container>
       <Content>
-        <img src={logo} alt="Logotipo do Quizzera" />
+        <img src={logo} alt="Quizzera's logo" />
         <p>Answer correctly to get to the top!</p>
         <Button onClick={() => history.push('/register')}>Register</Button>
         <Button onClick={() => history.push('/login')}>Login</Button>

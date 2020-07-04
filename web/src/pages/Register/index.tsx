@@ -38,7 +38,7 @@ const Register = () => {
   return (
     <Container>
       <Content>
-        <img src={logo} alt="Logotipo do Quizzera" />
+        <img src={logo} alt="Quizzera's logo" />
         <p>Are you up for a challenge?</p>
         { errors.length > 0 && 
           <div className="errors-container">
@@ -48,7 +48,7 @@ const Register = () => {
               ))
             }
           </div>
-        }        
+        }
         <form onSubmit={handleSubmit}>
           <fieldset>
             <label htmlFor="username">Username</label>
@@ -62,7 +62,7 @@ const Register = () => {
             <label htmlFor="password2">Confirm Password</label>
             <Input type="password" name="password2" id="password2" onChange={handleInputChange} />
           </fieldset>
-          <Button type="submit">Register</Button>
+          <Button type="submit" primary>Register</Button>
         </form>
       </Content>
     </Container>

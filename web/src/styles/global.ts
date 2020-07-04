@@ -8,13 +8,18 @@ export const Container = styled.div`
   min-height: 100vh;
 `;
 
-export const Button = styled.button`
+interface ButtonProps {
+  primary?: true;
+}
+
+export const Button = styled.button<ButtonProps>`
   width: 100%;
   text-transform: uppercase;
-  background: none;
+  background: ${props => props.primary ? '#66fcf1' : 'none'};
   border: 2px solid #66fcf1;
   border-radius: 2px;
-  color: #fff;
+  color: ${props => props.primary ? '#1f2833' : '#fff'};
+  font-weight: ${props => props.primary ? 'bold' : 'normal'};
   padding: .9rem;
 `;
 
