@@ -1,13 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+import { Button } from '../../styles/global';
+import { Container } from './styles';
+import logo from '../../assets/logo.png';
 
 const Home = () => {
   return (
-    <>
-      <h1 style={{margin: '1rem'}}>Home</h1>
-      <p>Got an account? <Link to="/login">Login</Link></p>
-      <p>Not yet? <Link to="/register">Register</Link></p>
-    </>
+    <Container>
+      <div className="content">
+        <img src={logo} alt="Logotipo do Quizzera" />
+        <p>Answer correctly to get to the top!</p>
+        <Button>Register</Button>
+        <Button>Login</Button>
+      </div>
+    </Container>
   );
 }
 
