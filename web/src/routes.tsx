@@ -3,6 +3,7 @@ import { Route, BrowserRouter, Switch, Redirect, RouteProps } from 'react-router
 
 import { isAuthenticated } from './services/auth';
 
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Quizzes from './pages/Quizzes';
@@ -24,6 +25,7 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <PrivateRoute path="/quizzes" component={Quizzes} />

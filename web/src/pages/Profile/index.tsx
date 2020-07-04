@@ -25,7 +25,7 @@ const Profile = () => {
 
   function handleLogout () {
     logout();
-    history.push('/login');
+    history.push('/');
   }
 
   return (
