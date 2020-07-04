@@ -32,3 +32,7 @@ export const Input = styled.input`
   padding: .8rem;
   font-size: 1rem;
 `;
+
+export const Title = styled.h1`
+  color: #45a29e;
+`;

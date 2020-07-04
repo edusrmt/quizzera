@@ -1,16 +1,21 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { Filter } from 'react-feather';
+
 import { QUIZZES, TriviaCategories, Quiz } from '../../shared/quizzes';
 
+import Header from '../../components/Header';
 import Navigator from '../../components/Navigator';
 import QuizCard from '../../components/QuizCard';
 
-import { FilterForm } from './styles';
+import { Content, FilterForm } from './styles';
+import { Title } from '../../styles/global';
 
 export default function Quizzes () {
   const [quizzes, setQuizzes] = useState<Quiz[]>(QUIZZES);
   const [selectedCategory, setSelectedCategory] = useState('none');
   const [selectedType, setSelectedType] = useState('none');
   const [selectedDifficulty, setSelectedDifficulty] = useState('none');
+  const [showFilter, setShowFilter] = useState(false);
 
   function handleCategorySelection (event: ChangeEvent<HTMLSelectElement>) {
     setSelectedCategory(event.target.value);
@@ -42,48 +47,62 @@ export default function Quizzes () {
     }
 
     setQuizzes(filteredQuizzes);
+    setShowFilter(false);
+  }
+
+  function toggleFilter () {
+    setShowFilter(!showFilter);
   }
 
   return (
     <div>
-      <div>
-        <h1 style={{ margin: '1rem' }}>Quizzes</h1>
-        <FilterForm onSubmit={handleSearch}>
-          <fieldset>
-            <label htmlFor="category">Category</label>
-            <select name="category" id="category" value={selectedCategory} onChange={handleCategorySelection}>
-              <option value="none">Select a category</option>
-              {
-                TriviaCategories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)
-              }
-            </select>
-          </fieldset>
+      <Header />
+      <Content>
+        <div className="content-head">
+          <Title>Quizzes</Title>
+          <button onClick={toggleFilter}>
+            <Filter />
+          </button>
+        </div>
+        {
+          showFilter &&
+          <FilterForm onSubmit={handleSearch}>
+            <fieldset>
+              <label htmlFor="category">Category</label>
+              <select name="category" id="category" value={selectedCategory} onChange={handleCategorySelection}>
+                <option value="none">Select a category</option>
+                {
+                  TriviaCategories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)
+                }
+              </select>
+            </fieldset>
 
-          <fieldset>
-            <label htmlFor="type">Type</label>
-            <select name="type" id="type" value={selectedType} onChange={handleTypeSelection}>
-              <option value="none">Select a type</option>
-              <option value="multiple">Multiple Choice</option>
-              <option value="boolean">True or False</option>
-            </select>
-          </fieldset>
+            <fieldset>
+              <label htmlFor="type">Type</label>
+              <select name="type" id="type" value={selectedType} onChange={handleTypeSelection}>
+                <option value="none">Select a type</option>
+                <option value="multiple">Multiple Choice</option>
+                <option value="boolean">True or False</option>
+              </select>
+            </fieldset>
 
-          <fieldset>
-            <label htmlFor="difficulty">Difficulty</label>
-            <select name="difficulty" id="difficulty" value={selectedDifficulty} onChange={handleDifficultySelection}>
-              <option value="none">Select a difficulty</option>
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
-          </fieldset>
+            <fieldset>
+              <label htmlFor="difficulty">Difficulty</label>
+              <select name="difficulty" id="difficulty" value={selectedDifficulty} onChange={handleDifficultySelection}>
+                <option value="none">Select a difficulty</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </fieldset>
 
-          <button type="submit">Seach quizzes</button>
-        </FilterForm>
+            <button type="submit">Search quizzes</button>
+          </FilterForm>
+        }
         <div>
           { quizzes.map(quiz => <QuizCard key={quiz.id} {...quiz} />) }
         </div>
-      </div>
+      </Content>
       <Navigator active={0} />
     </div>
   );

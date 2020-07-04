@@ -1,7 +1,7 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import server from '../../services/server';
-import { login } from '../../services/auth';
+import { login, isAuthenticated } from '../../services/auth';
 
 import { Container, Input, Button } from '../../styles/global';
 import { Content } from './styles';
@@ -15,6 +15,11 @@ const Login = () => {
   const [error, setError] = useState('');
   
   const history = useHistory();
+
+  useEffect(() => {
+    if(isAuthenticated())
+      history.push('/quizzes');
+  }, [history]);
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
