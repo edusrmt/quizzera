@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Crosshair, Clock, Award } from 'react-feather';
 import server from '../../services/server';
 
-import { RankTable } from './styles';
+import { Container, Title } from '../../styles/global';
+import { Content, RankTable } from './styles';
+import Header from '../../components/Header';
 import Navigator from '../../components/Navigator';
 
 interface Rank {
@@ -26,73 +29,75 @@ const Rank = () => {
 
   return (
     <>
-      <h1 style={{ margin: '1rem' }}>Rank</h1>
+      <Header />
+      <Content>
+        <Title>Rank</Title>
+        <h2><Crosshair />Accuracy</h2>
+        <RankTable>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              accuracy.map((rank, index) => (
+                <tr key={rank.username}>
+                  <td>{index + 1}</td>
+                  <td>{rank.username}</td>
+                  <td>{rank.score.toFixed(2)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </RankTable>
 
-      <h2 style={{ margin: '1rem' }}>Accuracy</h2>
-      <RankTable>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Username</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            accuracy.map((rank, index) => (
-              <tr key={rank.username}>
-                <td>{index + 1}</td>
-                <td>{rank.username}</td>
-                <td>{rank.score.toFixed(2)}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </RankTable>
+        <h2><Clock />Speed</h2>
+        <RankTable>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              speed.map((rank, index) => (
+                <tr key={rank.username}>
+                  <td>{index + 1}</td>
+                  <td>{rank.username}</td>
+                  <td>{rank.score.toFixed(2)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </RankTable>
 
-      <h2 style={{ margin: '1rem' }}>Speed</h2>
-      <RankTable>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Username</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            speed.map((rank, index) => (
-              <tr key={rank.username}>
-                <td>{index + 1}</td>
-                <td>{rank.username}</td>
-                <td>{rank.score.toFixed(2)}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </RankTable>
-
-      <h2 style={{ margin: '1rem' }}>Wisdom</h2>
-      <RankTable>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Username</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            wisdom.map((rank, index) => (
-              <tr key={rank.username}>
-                <td>{index + 1}</td>
-                <td>{rank.username}</td>
-                <td>{rank.score.toFixed(2)}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </RankTable>
+        <h2><Award />Wisdom</h2>
+        <RankTable>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              wisdom.map((rank, index) => (
+                <tr key={rank.username}>
+                  <td>{index + 1}</td>
+                  <td>{rank.username}</td>
+                  <td>{rank.score.toFixed(2)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </RankTable>
+      </Content>
       <Navigator active={1} />
     </>
   );
