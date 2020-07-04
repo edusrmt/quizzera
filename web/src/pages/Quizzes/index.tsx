@@ -8,7 +8,6 @@ import Navigator from '../../components/Navigator';
 import QuizCard from '../../components/QuizCard';
 
 import { Content, FilterForm } from './styles';
-import { Title } from '../../styles/global';
 
 export default function Quizzes () {
   const [quizzes, setQuizzes] = useState<Quiz[]>(QUIZZES);
@@ -58,12 +57,7 @@ export default function Quizzes () {
     <>
       <Header />
       <Content>
-        <div className="content-head">
-          <Title>Quizzes</Title>
-          <button onClick={toggleFilter}>
-            <Filter />
-          </button>
-        </div>
+        <button className="filter" onClick={toggleFilter}><Filter /></button>
         {
           showFilter &&
           <FilterForm onSubmit={handleSearch}>

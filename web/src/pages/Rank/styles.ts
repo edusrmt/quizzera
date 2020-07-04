@@ -23,7 +23,8 @@ export const Content = styled.div`
 
 export const RankTable = styled.table`
   width: 100%;
-  color: #1f2833;  
+  color: #1f2833;
+  margin-bottom: 1rem;
 
   th, td {
       background-color: #66fcf1;

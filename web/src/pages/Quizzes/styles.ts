@@ -4,30 +4,23 @@ export const Content = styled.div`
   margin: 50px 1rem 10vh 1rem;
   padding: 1rem;
 
-  .content-head {
+  button.filter {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 1rem;
+    justify-content: center;
+    margin: 0 0 1rem auto;
 
-    button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    background-color: #45a29e;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: .5rem;
 
-      background-color: #45a29e;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      padding: .5rem;
-
-      svg {
-        width: 1rem;
-        height: 1rem;
-      }
+    svg {
+      width: 1rem;
+      height: 1rem;
     }
-
   }
 `;
 

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Crosshair, Clock, Award } from 'react-feather';
 import server from '../../services/server';
 import { logout } from '../../services/auth';
 import { useHistory } from 'react-router-dom';
 
+import Header from '../../components/Header';
 import Navigator from '../../components/Navigator';
+
+import { Container } from '../../styles/global';
+import { Content } from './styles';
 
 interface User {
   username: string;
@@ -32,13 +37,19 @@ const Profile = () => {
 
   return (
     <>
-      <h1 style={{ margin: '1rem' }}>Profile</h1>
-      <h3>{user?.username}</h3>      
-      { picture && <img src={picture} alt="User avatar" /> }
-      <p>Accuracy: {user?.accuracy ? user.accuracy.toFixed(2) : 0}</p>
-      <p>Speed: {user?.speed ? user.speed.toFixed(2) : 0}</p>
-      <p>Wisdom: {user?.wisdom ? user.wisdom.toFixed(2) : 0}</p>
-      <button style={{color: 'red'}} onClick={handleLogout}>Logout</button>
+      <Header />
+      <Container>
+        <Content>
+          { picture && <img src={picture} alt="User avatar" /> }
+          <h3>{user?.username}</h3>
+          <span>
+            <Crosshair /> {user?.accuracy ? user.accuracy.toFixed(2) : 0}
+            <Clock /> {user?.speed ? user.speed.toFixed(2) : 0}
+            <Award /> {user?.wisdom ? user.wisdom.toFixed(2) : 0}
+          </span>
+          <button onClick={handleLogout}>Logout</button>
+        </Content>
+      </Container>      
       <Navigator active={2} />
     </>
   );
