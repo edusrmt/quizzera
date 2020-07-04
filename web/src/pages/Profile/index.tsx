@@ -3,6 +3,8 @@ import server from '../../services/server';
 import { logout } from '../../services/auth';
 import { useHistory } from 'react-router-dom';
 
+import Navigator from '../../components/Navigator';
+
 interface User {
   username: string;
   accuracy: number;
@@ -37,6 +39,7 @@ const Profile = () => {
       <p>Speed: {user?.speed ? user.speed.toFixed(2) : 0}</p>
       <p>Wisdom: {user?.wisdom ? user.wisdom.toFixed(2) : 0}</p>
       <button style={{color: 'red'}} onClick={handleLogout}>Logout</button>
+      <Navigator active={2} />
     </>
   );
 }

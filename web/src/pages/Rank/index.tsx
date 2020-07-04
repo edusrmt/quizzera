@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import server from '../../services/server';
 
 import { RankTable } from './styles';
+import Navigator from '../../components/Navigator';
 
 interface Rank {
   username: string;
@@ -92,6 +93,7 @@ const Rank = () => {
           }
         </tbody>
       </RankTable>
+      <Navigator active={1} />
     </>
   );
 }
